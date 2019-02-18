@@ -61,7 +61,7 @@ function setup() {
     // (or faster by setting it to a larger value)
     frameRate(60)
 
-    createCanvas(400, 400);
+    createCanvas(windowWidth-100, windowHeight-100);
 
     for (var i = 0; i < n; i++) {
 
