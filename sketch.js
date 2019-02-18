@@ -74,11 +74,10 @@ function setup() {
         // add the element
         elements.push(newElement);
     }
-
 }
 
 
-// you do not need to chanege anything in draw()
+// you do not need to change anything in draw()
 function draw() {
     background(98, 203, 219);
 
@@ -93,6 +92,10 @@ function draw() {
 
     }
 
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth-100, windowHeight-100);
 }
 
 
