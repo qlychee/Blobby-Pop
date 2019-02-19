@@ -1,6 +1,6 @@
-let timer = 20; //seconds of timer
+let timer = 10; //seconds of timer
 var buffId = 1864 //seed id
-
+var startbutton; 
 /*Fish Variables*/
 var f_x, f_y;
 radius = 65;
@@ -54,14 +54,26 @@ function setup() {
     // fix to the same random seed so that each time you run, you get 
     // the same random numbers, which is easy for debugging
     randomSeed(buffId)
+	noLoop();
     createCanvas(windowWidth-100, windowHeight-100);
+	startbutton = createButton("Start");
+  	startbutton.position(width / 2, height /5 + 250);
+  	startbutton.size(100, 50); 
+  	startbutton.style("font-size", "25px");
+  	startbutton.mousePressed(reset);
     frameRate(60)
     f_x = random(windowWidth-280);
     f_y = random(windowHeight - 280);
     letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
     createBubbles();
 }
+function reset(){
 
+  startbutton.hide();
+  loop();
+	createBubbles();
+
+}
 function draw() {
     background(98, 203, 219);
     //Timer
@@ -94,11 +106,15 @@ function draw() {
     textAlign(CENTER, CENTER);
     textSize(30);
     text('Time:' + timer, width / 2, height / 8);
-    if (frameCount % 60 == 0 && timer > 0) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
+    if (frameCount % 60 == 0 && timer > -1) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
         timer--;
     }
-    if (timer == 0) {
+    if (timer == -1) {
         text("GAME OVER", width / 2, height * 0.7);
+		blobfish.hide();
+		letter.hide();
+		noLoop();
+	
     }
 }
 
