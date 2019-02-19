@@ -54,7 +54,8 @@ function setup() {
     // fix to the same random seed so that each time you run, you get 
     // the same random numbers, which is easy for debugging
     randomSeed(buffId)
-	noLoop();
+    //stop draw function until button pressed
+    noLoop();
     createCanvas(windowWidth-100, windowHeight-100);
 	startbutton = createButton("Start");
   	startbutton.position(width / 2, height /5 + 250);
@@ -71,7 +72,7 @@ function reset(){
 
   startbutton.hide();
   loop();
-	createBubbles();
+  createBubbles();
 
 }
 function draw() {
