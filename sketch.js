@@ -91,7 +91,7 @@ function draw() {
     }
     //Fish collected 
     fill(255, 255, 255);
-    text('Fish Collected: ' + score, width / 2, 20);
+    text('Fish Collected: ' + score, width / 2, height/13);
     //letter for fish
     fill(242, 118, 188);
     textSize(40);
