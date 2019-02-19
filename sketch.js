@@ -69,11 +69,9 @@ function setup() {
     createBubbles();
 }
 function reset(){
-
   startbutton.hide();
   loop();
   createBubbles();
-
 }
 function draw() {
     background(98, 203, 219);
@@ -107,15 +105,19 @@ function draw() {
     textAlign(CENTER, CENTER);
     textSize(30);
     text('Time:' + timer, width / 2, height / 8);
-    if (frameCount % 60 == 0 && timer > -1) { // if the frameCount is divisible by 60, then a second has passed. it will stop at 0
-        timer--;
-    }
-    if (timer == -1) {
+    if (timer == 0) {
         text("GAME OVER", width / 2, height * 0.7);
 		blobfish.hide();
 		letter.hide();
 		noLoop();
-	
+    }
+}
+
+//decrement timer every second
+setInterval(decrementTimer, 1000);
+function decrementTimer() {
+    if (timer > 0) {
+        timer--;
     }
 }
 
