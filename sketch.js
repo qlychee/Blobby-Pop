@@ -1,4 +1,5 @@
 let timer = 10; //seconds of timer
+var interval; //for counting down
 var buffId = 1864 //seed id
 var startbutton; 
 /*Fish Variables*/
@@ -63,15 +64,17 @@ function setup() {
   	startbutton.style("font-size", "25px");
   	startbutton.mousePressed(reset);
     frameRate(60)
+    
     f_x = random(windowWidth-280);
     f_y = random(windowHeight - 280);
     letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
     createBubbles();
 }
-function reset(){
-  startbutton.hide();
-  loop();
-  createBubbles();
+function reset() {
+    interval = setInterval(decrementTimer, 1000);
+    startbutton.hide();
+    loop();
+    createBubbles();
 }
 function draw() {
     background(98, 203, 219);
@@ -114,7 +117,6 @@ function draw() {
 }
 
 //decrement timer every second
-setInterval(decrementTimer, 1000);
 function decrementTimer() {
     if (timer > 0) {
         timer--;
