@@ -3,10 +3,11 @@ var buffId = 1864 //seed id
 
 /*Fish Variables*/
 var f_x, f_y;
-radius = 50;
+radius = 65;
 var fishCollected = false;
 var score = 0; //fish collected
 var blobfish;
+var letter; //letter attached to fish
 
 new p5()
 /*Bubble Variables and Functions*/
@@ -55,8 +56,9 @@ function setup() {
     randomSeed(buffId)
     createCanvas(windowWidth-100, windowHeight-100);
     frameRate(60)
-    f_x = random(windowWidth-200);
-    f_y = random(windowHeight-200);
+    f_x = random(windowWidth-280);
+    f_y = random(windowHeight - 280);
+    letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
     createBubbles();
 }
 
@@ -76,12 +78,19 @@ function draw() {
     //Fish collected 
     fill(255, 255, 255);
     text('Fish Collected: ' + score, width / 2, 20);
+    //letter for fish
+    fill(242, 118, 188);
+    textSize(40);
+    textStyle(BOLD);
+    text(letter, f_x + 80, f_y + 10);
     //fish
-    blobfish.position(f_x+25, f_y+25);
+    blobfish.position(f_x-30, f_y-25);
     //invisible circle around fish
     noStroke();
+    noFill();
+    ellipse(f_x, f_y, radius * 2, radius * 2);
     fill(255, 255, 255);
-    ellipse(f_x, f_y, radius, radius);
+    textStyle(NORMAL);
     textAlign(CENTER, CENTER);
     textSize(30);
     text('Time:' + timer, width / 2, height / 8);
@@ -116,8 +125,10 @@ function update() {
 }
 
 function newFish() {
-    f_x = random(windowWidth - 200);
-    f_y = random(windowHeight - 200);
+    //new letter and location
+    letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+    f_x = random(windowWidth - 280);
+    f_y = random(windowHeight - 280);
 }
 //when the user clicks
 function mousePressed() {
@@ -134,7 +145,7 @@ function keyTyped() {
         bubbles ++;
         createBubbles();
     }
-    if (key === 'f') {
+    if (key === letter) {
         newFish();
         score++;
     }
