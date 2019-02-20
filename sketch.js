@@ -114,7 +114,23 @@ function draw() {
 		letter.hide();
 		noLoop();
     }
+
+	var startScreen = screen();
 }
+
+function screen(){
+
+	fill(50, 123, 163);
+	stroke(28, 31, 51);
+	rect( 700, 25, windowWidth-1500, windowHeight-150, 7);
+	fill(255, 255, 255);
+    textSize(40);
+	text('Blobby Pop!',  width / 2, height /9)
+	textSize(25);
+	text('Instructions: Click/Tap on as many blobfish or match the letter with the corresponding keyboard key to collect blobfish! Get as many before time runs out!',  width / 2.48, height /5, 350)
+
+}
+
 
 //decrement timer every second
 function decrementTimer() {
