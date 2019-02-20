@@ -1,11 +1,13 @@
-let timer = 10; //seconds of timer
+//change this to change length of game
+var gametime = 10; //this var is used in reset as well
+let timer = gametime; //seconds of timer
 var interval; //for counting down
 var buffId = 1864 //seed id
-var startbutton; 
+var startbutton, resetbutton; 
 var start = false;
 /*Fish Variables*/
 var f_x, f_y;
-radius = 65;
+const radius = 65;
 var fishCollected = false;
 var score = 0; //fish collected
 var blobfish;
@@ -56,27 +58,38 @@ function setup() {
     // fix to the same random seed so that each time you run, you get 
     // the same random numbers, which is easy for debugging
     randomSeed(buffId)
-    //stop draw function until button pressed
-    noLoop();
-    createCanvas(windowWidth-100, windowHeight-100);
+    createCanvas(windowWidth - 100, windowHeight - 100);
+    //start button
 	startbutton = createButton("Start");
-  	startbutton.position(width / 2, 6*height/7);
+  	startbutton.position(width / 2, 5*height/6);
   	startbutton.size(100, 50); 
   	startbutton.style("font-size", "25px");
-  	startbutton.mousePressed(reset);
+    startbutton.mousePressed(reset);
+    startbutton.hide(); //hide for now
+    //reset button
+    resetbutton = createButton("Play Again");
+    resetbutton.position(width / 2 -25, 5*height/6);
+    resetbutton.size(150, 50);
+    resetbutton.style("font-size", "25px");
+    resetbutton.mousePressed(startScreen);
+    resetbutton.hide(); //hide for now
     frameRate(60)
     
     f_x = random(windowWidth-280);
     f_y = random(windowHeight - 280);
-    letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+    letter = '';
     createBubbles();
+    interval = setInterval(decrementTimer, 1000);
 }
 function reset() {
-    interval = setInterval(decrementTimer, 1000);
+    timer = gametime;
+    score = 0;
     startbutton.hide();
-    loop();
     start = true;
+    newFish();
+    blobfish.show();
     createBubbles();
+    loop();
 }
 function draw() {
     background(98, 203, 219);
@@ -93,12 +106,7 @@ function draw() {
     }
     //Fish collected 
     fill(255, 255, 255);
-    text('Fish Collected: ' + score, width / 2, height/13.5);
-    //letter for fish
-    fill(242, 118, 188);
-    textSize(40);
-    textStyle(BOLD);
-    text(letter, f_x + 80, f_y + 10);
+    text('Fish Collected: ' + score, width / 2, height / 13.5);
     //fish
     blobfish.position(f_x-30, f_y-25);
     //invisible circle around fish
@@ -109,31 +117,54 @@ function draw() {
     textStyle(NORMAL);
     textAlign(CENTER, CENTER);
     textSize(30);
-    text('Time:' + timer, width / 2, height / 8);
+    text('Time: ' + timer, width / 2, height / 8);
     if (timer == 0) {
-        text("GAME OVER", width / 2, height * 0.7);
-		blobfish.hide();
-		letter.hide();
-		noLoop();
+        gameOver();
     }
     if (start == false) {
-        screen();
+        blobfish.hide();
+        letter = '';
+        startScreen();
     }
+    //letter for fish - putting this here so letter doesn't linger
+    fill(242, 118, 188);
+    textSize(40);
+    textStyle(BOLD);
+    text(letter, f_x + 80, f_y + 10);
 }
-
-function screen(){
-
+//game start and instructions
+function startScreen() {
+    resetbutton.hide();
 	fill(50, 123, 163);
 	//stroke(28, 31, 51);
 	rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
 	fill(255, 255, 255);
     textSize(40);
     text('Blobby Pop!', width / 2, height / 9);
-	textSize(35);
-    text('Instructions: Click/Tap on as many blobfish or match the letter with the corresponding keyboard key to collect blobfish! Get as many before time runs out!', windowWidth / 4 - 50, windowHeight/10, windowWidth / 2, windowHeight - 100)
-
+    textSize(35);
+    text('Instructions:', width / 2, height / 9 + 50);
+    text('Collect blobfish before', width / 2, height / 9 + 85);
+    text('the time runs out!', width / 2, height / 9 + 115);
+    text('To collect blobfish:', width / 2, height / 9 + 180);
+    text('*Desktop- click or press', width / 2, height / 9 + 215);
+    text('corresponding key', width / 2, height / 9 + 250);
+    text('*Mobile- tap', width / 2, height / 9 + 285);
+    startbutton.show();
 }
-
+//game over and restart
+function gameOver() {
+    fill(50, 123, 163);
+    rect(windowWidth / 4 - 50, 0, windowWidth / 2, windowHeight - 100);
+    fill(255, 255, 255);
+    text("GAME OVER", width / 2, height/3);
+    textSize(30);
+    textAlign(CENTER);
+    text('Fish Collected: ' + score, width / 2, height/2);
+    blobfish.hide();
+    letter = '';
+    resetbutton.show()
+    noLoop();
+}
 
 //decrement timer every second
 function decrementTimer() {
