@@ -2,6 +2,7 @@ let timer = 10; //seconds of timer
 var interval; //for counting down
 var buffId = 1864 //seed id
 var startbutton; 
+var start = false;
 /*Fish Variables*/
 var f_x, f_y;
 radius = 65;
@@ -59,7 +60,7 @@ function setup() {
     noLoop();
     createCanvas(windowWidth-100, windowHeight-100);
 	startbutton = createButton("Start");
-  	startbutton.position(width / 2, height /5 + 250);
+  	startbutton.position(width / 2, 6*height/7);
   	startbutton.size(100, 50); 
   	startbutton.style("font-size", "25px");
   	startbutton.mousePressed(reset);
@@ -74,6 +75,7 @@ function reset() {
     interval = setInterval(decrementTimer, 1000);
     startbutton.hide();
     loop();
+    start = true;
     createBubbles();
 }
 function draw() {
@@ -114,20 +116,21 @@ function draw() {
 		letter.hide();
 		noLoop();
     }
-
-	var startScreen = screen();
+    if (start == false) {
+        screen();
+    }
 }
 
 function screen(){
 
 	fill(50, 123, 163);
-	stroke(28, 31, 51);
-	rect( 700, 25, windowWidth-1500, windowHeight-150, 7);
+	//stroke(28, 31, 51);
+	rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
 	fill(255, 255, 255);
     textSize(40);
-	text('Blobby Pop!',  width / 2, height /9)
-	textSize(25);
-	text('Instructions: Click/Tap on as many blobfish or match the letter with the corresponding keyboard key to collect blobfish! Get as many before time runs out!',  width / 2.48, height /5, 350)
+    text('Blobby Pop!', width / 2, height / 9);
+	textSize(35);
+    text('Instructions: Click/Tap on as many blobfish or match the letter with the corresponding keyboard key to collect blobfish! Get as many before time runs out!', windowWidth / 4 - 50, windowHeight/10, windowWidth / 2, windowHeight - 100)
 
 }
 
@@ -178,7 +181,7 @@ function mousePressed() {
 
 function keyTyped() {
     //add more bubbles
-    if (key === 'b') {
+    if (key === ',') {
         bubbles ++;
         createBubbles();
     }
