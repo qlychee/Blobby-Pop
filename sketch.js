@@ -5,6 +5,7 @@ var interval; //for counting down
 var buffId = 1864 //seed id
 var startbutton, resetbutton; 
 var start = false;
+var resetKey = false; //play again spacebar
 /*Fish Variables*/
 var f_x, f_y;
 const radius = 65;
@@ -119,6 +120,7 @@ function draw() {
     textSize(30);
     text('Time: ' + timer, width / 2, height / 8);
     if (timer == 0) {
+        resetKey = true; 
         gameOver();
     }
     if (start == false) {
@@ -126,6 +128,7 @@ function draw() {
         letter = '';
         startScreen();
     }
+ 
     //letter for fish - putting this here so letter doesn't linger
     fill(242, 118, 188);
     textSize(40);
@@ -134,6 +137,8 @@ function draw() {
 }
 //game start and instructions
 function startScreen() {
+    start = false;
+    resetKey = false;
     resetbutton.hide();
 	fill(50, 123, 163);
 	//stroke(28, 31, 51);
@@ -220,6 +225,16 @@ function keyTyped() {
         newFish();
         score++;
     }
+    //spacebar option to start/play again instead of clicking button
+    if (key === ' '){
+        if(start == false){
+            reset();
+        }
+        if(resetKey == true){
+            startScreen();
+        }
+    }
+
 }
 
 function windowResized() {
