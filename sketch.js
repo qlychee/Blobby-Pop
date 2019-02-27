@@ -175,7 +175,7 @@ function startScreen() {
 	fill(50, 123, 163);
     //stroke(28, 31, 51);
     if(mobile){
-        rect( 0 ,0, width, height, 10);
+        rect( 0 ,0, width, height);
         fill(255, 255, 255);
         textSize(95);
         text('Blobby Pop!', width / 2, height / 9);
@@ -188,7 +188,7 @@ function startScreen() {
         
     }
     else{
-        rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
+        rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100, 20);
         fill(255, 255, 255);
         textSize(40);
         text('Blobby Pop!', width / 2, height / 9);
