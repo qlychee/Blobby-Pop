@@ -6,6 +6,7 @@ var buffId = 1864 //seed id
 var startbutton, resetbutton; 
 var start = false;
 var resetKey = false; //play again spacebar
+var mobile = false; //display differently for phone
 /*Fish Variables*/
 var f_x, f_y;
 const radius = 65;
@@ -60,18 +61,35 @@ function setup() {
     // the same random numbers, which is easy for debugging
     randomSeed(buffId)
     createCanvas(windowWidth - 100, windowHeight - 100);
+    if (windowWidth/windowHeight < 0.7){
+        mobile = true;
+    }
     //start button
 	startbutton = createButton("Start");
-  	startbutton.position(width / 2, 5*height/6);
-  	startbutton.size(100, 50); 
-  	startbutton.style("font-size", "25px");
+    if(mobile){
+        startbutton.position(width / 2 - 100, 5*height/6);
+        startbutton.size(300, 150);
+        startbutton.style("font-size", "70px");
+    }
+    else{
+        startbutton.position(width / 2, 5*height/6);
+        startbutton.size(100, 50); 
+        startbutton.style("font-size", "25px");
+    }		
     startbutton.mousePressed(reset);
     startbutton.hide(); //hide for now
     //reset button
     resetbutton = createButton("Play Again");
-    resetbutton.position(width / 2 -25, 5*height/6);
-    resetbutton.size(150, 50);
-    resetbutton.style("font-size", "25px");
+    if(mobile){
+        resetbutton.position(width / 2 - 100, 5*height/6);
+        resetbutton.size(300, 150);
+        resetbutton.style("font-size", "55px");
+    }
+    else{
+        resetbutton.position(width / 2 -25, 5*height/6);
+        resetbutton.size(150, 50);
+        resetbutton.style("font-size", "25px");
+    }	
     resetbutton.mousePressed(startScreen);
     resetbutton.hide(); //hide for now
     frameRate(60)
@@ -94,10 +112,6 @@ function reset() {
 }
 function draw() {
     background(98, 203, 219);
-    //Timer
-    fill(150);
-    textSize(30);
-    textAlign(CENTER);
     // iterate through bubble array
     for (var i = 0; i < elements.length; i++) {
         // update the attributes of the i-th element
@@ -105,9 +119,18 @@ function draw() {
         // call drawElement to draw the i-th element
         drawElement(elements[i]);
     }
+    //Timer
+    fill(150);
+    textAlign(CENTER);
     //Fish collected 
     fill(255, 255, 255);
-    text('Fish Collected: ' + score, width / 2, height / 13.5);
+    if(mobile){
+        textSize(75)
+        text('Fish Collected: ' + score, width / 2, height / 20);
+    }else{
+        textSize(30);
+        text('Fish Collected: ' + score, width / 2, height / 13.5);
+    }
     //fish
     blobfish.position(f_x-30, f_y-25);
     //invisible circle around fish
@@ -115,25 +138,34 @@ function draw() {
     noFill();
     ellipse(f_x, f_y, radius * 2, radius * 2);
     fill(255, 255, 255);
-    textStyle(NORMAL);
     textAlign(CENTER, CENTER);
-    textSize(30);
-    text('Time: ' + timer, width / 2, height / 8);
+    if(mobile){
+        textStyle(BOLD);
+        textSize(75);
+        text('Time: ' + timer, width / 2, height-80);
+    }else{
+        textStyle(NORMAL);
+        textSize(30);
+        text('Time: ' + timer, width / 2, height / 8);
+    }
     if (timer == 0) {
         resetKey = true; 
         gameOver();
     }
-    if (start == false) {
+    if (!start) {
         blobfish.hide();
         letter = '';
         startScreen();
     }
- 
-    //letter for fish - putting this here so letter doesn't linger
-    fill(242, 118, 188);
-    textSize(40);
-    textStyle(BOLD);
-    text(letter, f_x + 80, f_y + 10);
+    if(!mobile){
+        //letter for fish - putting this here so letter doesn't linger
+        fill(242, 118, 188);
+        textSize(40);
+        textStyle(BOLD);
+        text(letter, f_x + 80, f_y + 10);
+
+    }
+
 }
 //game start and instructions
 function startScreen() {
@@ -141,30 +173,57 @@ function startScreen() {
     resetKey = false;
     resetbutton.hide();
 	fill(50, 123, 163);
-	//stroke(28, 31, 51);
-	rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
-	fill(255, 255, 255);
-    textSize(40);
-    text('Blobby Pop!', width / 2, height / 9);
-    textSize(35);
-    text('Instructions:', width / 2, height / 9 + 50);
-    text('Collect blobfish before', width / 2, height / 9 + 85);
-    text('the time runs out!', width / 2, height / 9 + 115);
-    text('To collect blobfish:', width / 2, height / 9 + 180);
-    text('*Desktop- click or press', width / 2, height / 9 + 215);
-    text('corresponding key', width / 2, height / 9 + 250);
-    text('*Mobile- tap', width / 2, height / 9 + 285);
+    //stroke(28, 31, 51);
+    if(mobile){
+        rect( 0 ,0, width, height);
+        fill(255, 255, 255);
+        textSize(95);
+        text('Blobby Pop!', width / 2, height / 9);
+        textSize(75);
+        text('Instructions:', width / 2, height / 9 + 200);
+        text('Collect blobfish', width / 2, height / 9 + 275);
+        text('by tapping on them', width / 2, height / 9 + 350);
+        text('before the time', width / 2, height / 9 + 425);
+        text('runs out!', width / 2, height / 9 + 500);
+        
+    }
+    else{
+        rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
+        fill(255, 255, 255);
+        textSize(40);
+        text('Blobby Pop!', width / 2, height / 9);
+        textSize(35);
+        text('Instructions:', width / 2, height / 9 + 50);
+        text('Collect blobfish before', width / 2, height / 9 + 85);
+        text('the time runs out!', width / 2, height / 9 + 115);
+        text('To collect blobfish:', width / 2, height / 9 + 180);
+        text('Click or press', width / 2, height / 9 + 215);
+        text('corresponding key', width / 2, height / 9 + 250);
+    }
+	
     startbutton.show();
 }
 //game over and restart
 function gameOver() {
     fill(50, 123, 163);
-    rect(windowWidth / 4 - 50, 0, windowWidth / 2, windowHeight - 100);
-    fill(255, 255, 255);
-    text("GAME OVER", width / 2, height/3);
-    textSize(30);
-    textAlign(CENTER);
-    text('Fish Collected: ' + score, width / 2, height/2);
+    if(mobile){
+        rect( 0 ,0, width, height);
+        fill(255, 255, 255);
+        textSize(75);
+        text("GAME OVER", width / 2, height/3);
+        textSize(75);
+        textAlign(CENTER);
+        text('Fish Collected: ' + score, width / 2, height/2);
+    }
+    else{
+        rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
+        fill(255, 255, 255);
+        textSize(30)
+        text("GAME OVER", width / 2, height/3);
+        textSize(30);
+        textAlign(CENTER);
+        text('Fish Collected: ' + score, width / 2, height/2);
+    }
     blobfish.hide();
     letter = '';
     resetbutton.show()
@@ -202,7 +261,7 @@ function update() {
 
 function newFish() {
     //new letter and location
-    letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+    letter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     f_x = random(windowWidth - 280);
     f_y = random(windowHeight - 280);
 }
@@ -221,16 +280,16 @@ function keyTyped() {
         bubbles ++;
         createBubbles();
     }
-    if (key === letter) {
+    if (key.toLowerCase() === letter.toLowerCase()) {
         newFish();
         score++;
     }
     //spacebar option to start/play again instead of clicking button
     if (key === ' '){
-        if(start == false){
+        if(!start){
             reset();
         }
-        if(resetKey == true){
+        if(resetKey){
             startScreen();
         }
     }
