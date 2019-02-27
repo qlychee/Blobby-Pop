@@ -1,5 +1,5 @@
 //change this to change length of game
-var gametime = 10; //this var is used in reset as well
+var gametime = 20; //this var is used in reset as well
 let timer = gametime; //seconds of timer
 var interval; //for counting down
 var buffId = 1864 //seed id
@@ -175,7 +175,7 @@ function startScreen() {
 	fill(50, 123, 163);
     //stroke(28, 31, 51);
     if(mobile){
-        rect( 0 ,0, width, height);
+        rect( 0 ,0, width, height, 10);
         fill(255, 255, 255);
         textSize(95);
         text('Blobby Pop!', width / 2, height / 9);
