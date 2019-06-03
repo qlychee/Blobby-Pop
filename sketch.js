@@ -2,7 +2,7 @@
 var gametime = 20; //this var is used in reset as well
 let timer = gametime; //seconds of timer
 var interval; //for counting down
-var buffId = 1864 //seed id
+var buffId = 1864; //seed id
 var startbutton, resetbutton; 
 var start = false;
 var resetKey = false; //play again spacebar
@@ -25,23 +25,23 @@ var y = 200;
 // changes in x, y
 var dx = 0;
 var dy = 0;
-// set the inital properties of each element
+// set the initial properties of each element
 function initElement(element, i) {
-    element.id = i	// id
+    element.id = i;	// id
     element.x = random(width); // random x position
     element.y = random(height); // random y postion
     element.s = random(100);  // random size  	
-    element.color1 = color(139, 224, 237); // random color
-    element.color2 = color(211, 249, 255); // random color
+    element.color1 = color(139, 224, 237);
+    element.color2 = color(211, 249, 255); 
     element.direction = 0.7;
 }
 //bubble elements appear on screen at random locations and sizes 
 function drawElement(element) {
-    stroke(element.color2)
-    strokeWeight(1)
-    fill(element.color1)
-    ellipse(element.x, element.y, element.s)
-    fill(255)
+    stroke(element.color2);
+    strokeWeight(1);
+    fill(element.color1);
+    ellipse(element.x, element.y, element.s);
+    fill(255);
 }
 // update a given element
 function updateElement(element) {
@@ -57,8 +57,6 @@ function preload() {
     blobfish = createImg('blobfish.gif');
 }
 function setup() {
-    // fix to the same random seed so that each time you run, you get 
-    // the same random numbers, which is easy for debugging
     randomSeed(buffId)
     createCanvas(windowWidth - 100, windowHeight - 100);
     if (windowWidth/windowHeight < 0.7){
@@ -92,7 +90,7 @@ function setup() {
     }	
     resetbutton.mousePressed(startScreen);
     resetbutton.hide(); //hide for now
-    frameRate(60)
+    frameRate(60);
     
     f_x = random(windowWidth-280);
     f_y = random(windowHeight - 280);
@@ -218,7 +216,7 @@ function gameOver() {
     else{
         rect( windowWidth/4-50, 0, windowWidth/2, windowHeight-100);
         fill(255, 255, 255);
-        textSize(30)
+        textSize(30);
         text("GAME OVER", width / 2, height/3);
         textSize(30);
         textAlign(CENTER);
@@ -226,7 +224,7 @@ function gameOver() {
     }
     blobfish.hide();
     letter = '';
-    resetbutton.show()
+    resetbutton.show();
     noLoop();
 }
 
@@ -254,8 +252,8 @@ function update() {
         dy = 0;
     }
     else {
-        x = x + dx
-        y = y + dy
+        x = x + dx;
+        y = y + dy;
     }
 }
 
@@ -267,7 +265,7 @@ function newFish() {
 }
 //when the user clicks
 function mousePressed() {
-    var d = dist(mouseX, mouseY, f_x, f_y)
+    var d = dist(mouseX, mouseY, f_x, f_y);
     if (d < radius) {
         newFish();
         score++;
